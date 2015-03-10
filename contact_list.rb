@@ -24,14 +24,29 @@ def accept_argv
   when 'show'
     id = input[1]
     show_contact(id)
+  when 'find'
+    search(input[1])
   end
 end
 
 def create_new
-  puts 'enter new contact name:'  
-  contact_name = gets.chomp
+
+  contacts = ContactDatabase.get_all
+
   puts 'enter new contact email'
   contact_email = gets.chomp
+
+  contacts.each do |item|
+    item = item.to_s
+    if item.include? contact_email
+      puts "that contact already exists"
+      create_new 
+      return
+    end
+  end
+
+  puts 'enter new contact name:'  
+  contact_name = gets.chomp
   Contact.create(contact_name, contact_email)
   puts "contact added"
 end
@@ -45,6 +60,16 @@ end
 
 def show_contact(id)
   Contact.show(id)
-end    
+end
+
+def search(term)
+  array = []
+  contacts = ContactDatabase.get_all
+  contacts.each do |item|
+    item = item.to_s
+    array << item if item.include? term
+    end
+  puts array
+end
 
 accept_argv
