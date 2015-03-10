@@ -1,23 +1,28 @@
 class Contact
  
-  attr_accessor :name, :email
+  attr_accessor :name, :email, :ph_number
  
-  def initialize(name, email)
+  def initialize(name, email, *ph_number)
     # TODO: assign local variables to instance variables
     @name = name
     @email = email
+    @ph_number = ph_number
   end
  
   def to_s
     # TODO: return string representation of Contact
-    "#{@name}, #{@email}"
+    "#{@name}, #{@email}, #{ph_number}"
+  end
+
+  def add_ph_num(ph_num)
+     @ph_number << ph_num
   end
  
   ## Class Methods
   class << self
-    def create(name, email)
+    def create(name, email, *ph_num )
       # TODO: Will initialize a contact as well as add it to the list of contacts
-      ContactDatabase.create_contact(name, email)
+      ContactDatabase.create_contact(name, email, ph_num)
     end
 
     def find(index)

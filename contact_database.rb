@@ -5,10 +5,10 @@ class ContactDatabase
   
   class << self
 
-    def create_contact(name, email)
-      contact = Contact.new(name, email)
+    def create_contact(name, email, *ph_number)
+      contact = Contact.new(name, email, *ph_number)
       CSV.open('contacts.csv', 'a') do |csv|
-        csv << [contact.name, contact.email]
+        csv << [contact.name, contact.email, contact.ph_number]
       end
     end
 
@@ -18,7 +18,8 @@ class ContactDatabase
       CSV.foreach('contacts.csv') do |row|
         name = row[0]
         email = row[1]
-        temporary_contact = Contact.new(name, email)
+        ph_number = row[2]
+        temporary_contact = Contact.new(name, email, ph_number)
         array << temporary_contact
       end
       array

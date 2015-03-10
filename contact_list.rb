@@ -47,7 +47,21 @@ def create_new
 
   puts 'enter new contact name:'  
   contact_name = gets.chomp
-  Contact.create(contact_name, contact_email)
+  @new_number = ""
+  @loop = "YES"
+
+  while @loop == "YES"
+    puts 'phone number:'
+    ph_num = gets.chomp
+    puts 'number label (ie home, mobile):'
+    ph_label = gets.chomp
+    @new_number += "#{ph_label}: #{ph_num}, "
+    @new_number
+    puts 'more phone numbers?'
+    @loop = gets.chomp
+  end
+
+  Contact.create(contact_name, contact_email, @new_number)
   puts "contact added"
 end
 
