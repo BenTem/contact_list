@@ -42,7 +42,22 @@ class Contact
   end
  
   # ## DANGER Below is wet wet code. It's up to you to DRY it out and make it more succinct.
-  
+
+   def self.all
+    results = []
+    CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts') do |rows|
+      rows.each do |row|
+        results << Contact.new(
+            row['firstname'],
+            row['lastname'],
+            row['email'],
+            row['id']
+        )
+      end
+    end
+    results
+  end
+
   def self.find(id)
     result = nil
     CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts WHERE id = $1 LIMIT 1', [id]) do |rows|
@@ -57,12 +72,12 @@ class Contact
     end
     result
   end
- 
-  def self.all
-    results = []
-    CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts') do |rows|
+
+  def self.find_by_lastname(lastname)
+    result = nil
+    CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts WHERE lastname = $1 LIMIT 1', [lastname]) do |rows|
       rows.each do |row|
-        results << Contact.new(
+        result = Contact.new(
             row['firstname'],
             row['lastname'],
             row['email'],
@@ -70,8 +85,40 @@ class Contact
         )
       end
     end
-    results
+    result
   end
+
+  def self.find_by_firstname(firstname)
+    result = nil
+    CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts WHERE firstname = $1 LIMIT 1', [firstname]) do |rows|
+      rows.each do |row|
+        result = Contact.new(
+            row['firstname'],
+            row['lastname'],
+            row['email'],
+            row['id']
+        )
+      end
+    end
+    result
+  end
+
+  def self.find_by_email(email)
+    result = nil
+    CONN.exec_params('SELECT id, firstname, lastname, email FROM contacts WHERE email = $1 LIMIT 1', [email]) do |rows|
+      rows.each do |row|
+        result = Contact.new(
+            row['firstname'],
+            row['lastname'],
+            row['email'],
+            row['id']
+        )
+      end
+    end
+    result
+  end
+ 
+
  
 
 
