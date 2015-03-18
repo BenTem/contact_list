@@ -55,7 +55,13 @@ class Contact
         )
       end
     end
-    results
+    results.each do |result|
+      result.display
+    end
+  end
+  
+  def display
+    puts "Name: #{@firstname} #{@lastname}. Email: #{@email}"
   end
 
   def self.find(id)
@@ -70,7 +76,7 @@ class Contact
         )
       end
     end
-    result
+    result.display
   end
 
   def self.find_by_lastname(lastname)
@@ -85,7 +91,7 @@ class Contact
         )
       end
     end
-    result
+    result.display
   end
 
   def self.find_by_firstname(firstname)
@@ -100,7 +106,7 @@ class Contact
         )
       end
     end
-    result
+    result.display
   end
 
   def self.find_by_email(email)
@@ -115,7 +121,7 @@ class Contact
         )
       end
     end
-    result
+    result.display
   end
  
 
